@@ -1,6 +1,7 @@
 import XMonad
 import XMonad.Hooks.ICCCMFocus
 import XMonad.Hooks.SetWMName
+import XMonad.Hooks.EwmhDesktops
 
 myTerminal = "urxvtc"
 myFocusFollowsMouse = False
@@ -14,8 +15,7 @@ myManageHook = composeAll
   [ className =? "weka-gui-GUIChooser" --> doFloat
   , className =? "gimp" --> doFloat ]
 
-main = do
-     xmonad defaultConfig{
+main = xmonad $ ewmh defaultConfig {
        terminal = myTerminal,
        focusFollowsMouse = myFocusFollowsMouse,
        borderWidth = myBorderWidth,

@@ -22,6 +22,10 @@ Bundle 'pbrisbin/html-template-syntax'
 Bundle 'kana/vim-textobj-user'
 Bundle 'kana/vim-textobj-indent'
 Bundle 'Shougo/neocomplete.vim'
+Bundle 'groenewege/vim-less'
+Bundle 'lordm/vim-browser-reload-linux'
+
+Bundle 'kchmck/vim-coffee-script'
 "Bundle 'godlygeek/tabular'
 "Bundle 'sirver/ultisnips'
 
@@ -80,5 +84,20 @@ inoremap <expr><C-e>  neocomplete#cancel_popup()
 
 autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 
-let g:ctrlp_custom_ignore = '\v\.(o|hi)$'
+let g:ctrlp_custom_ignore = '\v\.(o|hi|js|css)$'
 let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_working_path_mode = 0
+
+function LessToCss()
+  let current_file = shellescape(expand('%:p'))
+  let filename = shellescape(expand('%:r'))
+  let filepath = "/home/akegalj/projects/visitcro/static/css/"
+  let command = "silent !lessc " . filepath . "style.less " . filepath . "style.css"
+  execute command
+endfunction
+autocmd BufWritePost,FileWritePost *.less call LessToCss() | ChromiumReload visitcro
+
+let coffee_make_options = '--bare'
+autocmd QuickFixCmdPost * nested cwindow | ChromiumReload visitcro
+autocmd BufWritePost *.coffee silent make!
+autocmd BufWritePost *.html silent ChromiumReload visitcro
