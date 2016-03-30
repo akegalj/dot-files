@@ -1,27 +1,38 @@
-import XMonad
-import XMonad.Hooks.ICCCMFocus
-import XMonad.Hooks.SetWMName
-import XMonad.Hooks.EwmhDesktops
+import System.Directory (doesDirectoryExist, getHomeDirectory)
+import XMonad hiding (focus)
+import XMonad.StackSet
+import XMonad.Util.EZConfig
+import Data.Char (toLower)
 
-myTerminal = "urxvtc"
-myFocusFollowsMouse = False
-myBorderWidth = 1
-myModMask = mod1Mask
-myWorkspaces = map show [1..9]
-myNormalBorderColor = "#000000"
-myFocusedBorderColor = "#000000"
-
-myManageHook = composeAll
-  [ className =? "weka-gui-GUIChooser" --> doFloat
-  , className =? "gimp" --> doFloat ]
-
-main = xmonad $ ewmh defaultConfig {
-       terminal = myTerminal,
-       focusFollowsMouse = myFocusFollowsMouse,
-       borderWidth = myBorderWidth,
-       modMask = myModMask,
-       workspaces = myWorkspaces,
-       manageHook = myManageHook,
-       normalBorderColor = myNormalBorderColor,
-       logHook = takeTopFocus
-}
+main = xmonad $ defaultConfig
+    { 
+      focusFollowsMouse = False
+    , normalBorderColor = "#000000"
+    , modMask = mod1Mask
+    }
+    `additionalKeysP`
+    [("M-S-<Return>", spawnWithMaybeFocusedTerminal )]
+     where returnPath home = replaceTilda . safeTail . takeFrom ':'
+             where replaceTilda []     = []
+                   replaceTilda p@(x:xs) | x == '~'  = home ++ xs
+                                         | otherwise = p    
+           safeTail xs = if null xs then xs else tail xs
+           takeFrom c = dropWhile (not . (c ==))
+           lowerCaseClassName = map toLower <$> className
+           spawnSpecialTerminalIf b f | b         = f
+                                      | otherwise = io $ spawn terminal
+           spawnWithMaybeFocusedTerminal = do
+                  mw <- withWindowSet $ return . peek
+                  case mw of
+                    Just pid  -> flip runQuery pid $ do
+                                   isTerminal <- lowerCaseClassName =? terminalName
+                                   spawnSpecialTerminalIf isTerminal $ do
+                                      home <- io getHomeDirectory
+                                      let path = returnPath home <$> title
+                                      isDirectory <- path >>= io . doesDirectoryExist
+                                      spawnSpecialTerminalIf isDirectory $ path >>= io . spawn . terminalCd
+                    Nothing   -> spawn terminal
+           terminal = terminalName ++ terminalOptions
+           terminalCd dir = terminal ++ " -cd '" ++ dir ++ "'"
+           terminalName = "urxvt"
+           terminalOptions = "c" -- c stands for demon/client arhitecture
