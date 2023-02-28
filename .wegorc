@@ -15,7 +15,7 @@ aat-monochrome=false
 backend=forecast.io
 
 # NUMBER of days of weather forecast to be displayed (default 3)
-days=3
+days=1
 
 # forecast backend: the api KEY to use (default )
 forecast-api-key=fdcf68cfeef16f11991fb8c3684b7315
@@ -27,13 +27,13 @@ forecast-debug=false
 forecast-lang=en
 
 # FRONTEND to be used (default ascii-art-table)
-frontend=ascii-art-table
+frontend=emoji
 
 # json frontend: do not indent the output (default false)
 jsn-no-indent=false
 
 # LOCATION to be queried (default 40.748,-73.985)
-location=45.81444,15.97798
+location=45.789,15.946
 
 # openweathermap backend: the api KEY to use (default )
 owm-api-key=

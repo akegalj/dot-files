@@ -1,27 +1,20 @@
-import Data.Char
-    ( toLower )
-import Data.Default
-    ( def )
-import System.Directory
-    ( doesDirectoryExist, getHomeDirectory )
-import XMonad hiding
-    ( focus )
-import XMonad.Actions.DynamicWorkspaceGroups
-import XMonad.Hooks.EwmhDesktops
-    ( ewmh, fullscreenEventHook )
-import XMonad.StackSet
--- TODO: use alsa module instead of manual alsa mixing
--- import           XMonad.Util.ALSA
-import XMonad.Layout.NoBorders
-import XMonad.Util.EZConfig
+import           Data.Char                             (toLower)
+import           Data.Default                          (def)
+import           System.Directory                      (doesDirectoryExist,
+                                                        getHomeDirectory)
+import           XMonad                                hiding (focus)
+import           XMonad.Actions.DynamicWorkspaceGroups
+import           XMonad.Hooks.EwmhDesktops             (ewmh, ewmhFullscreen)
+import           XMonad.StackSet
+import           XMonad.Layout.NoBorders
+import           XMonad.Util.EZConfig
 
-main = xmonad $ ewmh $ def
+main = xmonad . ewmhFullscreen . ewmh $ def
     {
       focusFollowsMouse = False
     -- TODO: hide borders when fullscreen
     , normalBorderColor = "#000000"
     , modMask = mod1Mask
-    , handleEventHook = handleEventHook def <+> fullscreenEventHook
     }
     `additionalKeysP`
     [ ("M-S-<Return>", spawnWithMaybeFocusedTerminal )

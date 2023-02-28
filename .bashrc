@@ -18,9 +18,12 @@ set -o vi
 PATH=":/home/akegalj/.local/bin/:${PATH}:/home/akegalj/.cabal/bin:.cabal-sandbox/bin:/home/akegalj/.gem/ruby/2.4.0/bin:/home/akegalj/.w3m/scripts"
 
 # alias neomutt='cd ~/Downloads && neomutt '
+
+alias nix-haskell="nix-shell -p 'haskellPackages.ghcWithPackages (pkgs: with pkgs; [ $@ ])'"
+alias nix-shell='TERM=xterm nix-shell'
 alias wegozg='wego -l "45.81444,15.97798"'
-alias w3m='w3m -M -o confirm_qq=false'
-alias zenkoans='w3m -M -o confirm_qq=false ~/zenkoans.html'
+alias w3m='w3m -o confirm_qq=false'
+alias zenkoans='w3m -o confirm_qq=false ~/zenkoans.html'
 alias pastebin='curl -F c=@- https://ptpb.pw < '
 alias vima='vim-anywhere.sh'
 alias ls='ls --color=auto'
@@ -33,9 +36,9 @@ alias xcliptemp='xclip -selection clipboard -o | xclip -selection primary && sle
 # alias slock='amixer set "Master" mute > /dev/null;slock;amixer set "Master" unmute > /dev/null; espeak "Unmuted." 2&> /dev/null'
 
 # PS1='[\u@\h \W]\$ '
-PS1='\[\e[1;36m\][\u@\h \W]\$\[\e[0m\] '
+PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]$ '
 export EDITOR=vim
-export BROWSER=w3m
+export BROWSER=qutebrowser
 # export ELM_HOME=./node_modules/elm/share
 
 # Use bash-completion, if available
@@ -60,3 +63,9 @@ export WASIENV_DIR="/home/akegalj/.wasienv"
 # Wasmer
 export WASMER_DIR="/home/akegalj/.wasmer"
 [ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
+
+export CARDANO_CLI=/home/akegalj/projects/active/OctoWars/cardano-node/result/testnet/cardano-cli/bin/cardano-cli
+export TESTNET_MAGIC_NUM=1097911063
+export CARDANO_NODE_SOCKET_PATH=/home/akegalj/node.socket
+
+[ -f "/home/akegalj/.ghcup/env" ] && source "/home/akegalj/.ghcup/env" # ghcup-env

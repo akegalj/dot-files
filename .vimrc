@@ -18,7 +18,8 @@ Plugin 'sjl/badwolf'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'kana/vim-textobj-user'
 " Plugin 'gilligan/vim-textobj-haskell'
-Plugin 'nbouscal/vim-stylish-haskell'
+" Plugin 'nbouscal/vim-stylish-haskell'
+Plugin 'sdiehl/vim-ormolu'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'vimwiki/vimwiki'
 Plugin 'rust-lang/rust.vim'
@@ -200,3 +201,6 @@ let g:rustfmt_autosave = 1
 " let g:syntastic_auto_loc_list = 1
 " let g:syntastic_check_on_open = 1
 " let g:syntastic_check_on_wq = 0
+
+set nofixeol
+set noeol
