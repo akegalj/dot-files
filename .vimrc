@@ -151,7 +151,6 @@ set mouse=a
 colorscheme badwolf
 
 " colorscheme zenburn
-" set bg=dark
 
 " syntax on
 " filetype plugin indent on

@@ -4,7 +4,6 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-
 HISTSIZE=10000
 
 # don't put duplicate lines in the history
@@ -63,9 +62,5 @@ export WASIENV_DIR="/home/akegalj/.wasienv"
 # Wasmer
 export WASMER_DIR="/home/akegalj/.wasmer"
 [ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
-
-export CARDANO_CLI=/home/akegalj/projects/active/OctoWars/cardano-node/result/testnet/cardano-cli/bin/cardano-cli
-export TESTNET_MAGIC_NUM=1097911063
-export CARDANO_NODE_SOCKET_PATH=/home/akegalj/node.socket
 
 [ -f "/home/akegalj/.ghcup/env" ] && source "/home/akegalj/.ghcup/env" # ghcup-env
